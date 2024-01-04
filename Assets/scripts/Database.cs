@@ -23,6 +23,9 @@ public class Database : MonoBehaviour
     void Start()
     {
         mDatabaseRef = FirebaseDatabase.DefaultInstance.RootReference;
+
+        auth = FirebaseAuth.DefaultInstance;
+        email.onValueChanged.AddListener(handlevaluechange);
     }
 
     // Update is called once per frame
