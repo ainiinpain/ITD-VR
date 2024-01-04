@@ -13,6 +13,9 @@ using System.Text.RegularExpressions;
 
 public class Database : MonoBehaviour
 {
+
+    private FirebaseAuth auth;
+    private FirebaseApp _app;
     DatabaseReference mDatabaseRef;
 
     public TMP_InputField username;
@@ -25,7 +28,7 @@ public class Database : MonoBehaviour
         mDatabaseRef = FirebaseDatabase.DefaultInstance.RootReference;
 
         auth = FirebaseAuth.DefaultInstance;
-        email.onValueChanged.AddListener(handlevaluechange);
+        /*email.onValueChanged.AddListener(handlevaluechange);*/
     }
 
     // Update is called once per frame
