@@ -1,14 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
 using Firebase;
-using Firebase.Database;
 using Firebase.Auth;
+using TMPro;
 using Firebase.Extensions;
-using System.Threading.Tasks;
-using System.Text.RegularExpressions;
+using Firebase.Database;
+using System.Linq;
+using System;
 
 
 public class Database : MonoBehaviour
@@ -18,9 +17,23 @@ public class Database : MonoBehaviour
     private FirebaseApp _app;
     DatabaseReference mDatabaseRef;
 
-    public TMP_InputField username;
-    public TMP_InputField email;
-    public TMP_InputField password;
+    [SerializeField] private TMP_InputField email; // input field for email
+    [SerializeField] private TMP_InputField password; // input field for password 
+    [SerializeField] private TMP_InputField username; // input field for username 
+/*    public GameObject username;
+    public GameObject email;
+    public GameObject password;*/
+
+    private async void Awake()
+    {
+        var dependancy = await FirebaseApp.CheckAndFixDependenciesAsync();
+        if (dependancy == DependencyStatus.Available)
+        {
+            _app = FirebaseApp.DefaultInstance;
+        }
+    }
+
+    private DatabaseReference reference; 
 
     // Start is called before the first frame update
     void Start()
@@ -28,54 +41,46 @@ public class Database : MonoBehaviour
         mDatabaseRef = FirebaseDatabase.DefaultInstance.RootReference;
 
         auth = FirebaseAuth.DefaultInstance;
-        /*email.onValueChanged.AddListener(handlevaluechange);*/
+        email.onValueChanged.AddListener(handlevaluechange);
+        password.onValueChanged.AddListener(handlevaluechange);
+        username.onValueChanged.AddListener(handlevaluechange);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void handlevaluechange(string A)
     {
-        
+        checkstate();
+
     }
-
-    private void WriteNewUser(string username, string email, string password)
+    private void checkstate()
     {
-        //create a user object
-        User demoUser = new User(username, email, password);
-        string json = JsonUtility.ToJson(demoUser);
-
-        mDatabaseRef.Child("users").Child(username).SetRawJsonValueAsync(json);
-    }
-
-    /// <summary>
-    /// sends input data to firebase to create account
-    /// </summary>
-    public void SendData()
-    {
-        string username1 = username.text.Trim();
-        string email1 = email.text.Trim();
-        string password1 = password.text.Trim();
-
-        if (IsValidEmail(email1))
+        if (string.IsNullOrEmpty(email.text))
         {
-            Debug.Log("Account successfully created");
+            Debug.Log("Email is invalid");
+
         }
-        else
+        if (string.IsNullOrEmpty(password.text))
         {
-            Debug.LogError("Invalid email format");
+            Debug.Log("password is empty");
+
         }
+        if (string.IsNullOrEmpty(username.text))
+        {
+            Debug.Log("username is empty");
 
-        /*SignUpUser(email1, password1);*/
-        WriteNewUser(username1, email1, password1);
+        }
     }
 
-    /// <summary>
-    /// checks if email format is correct
-    /// </summary>
-    /// <param name="email"></param>
-    /// <returns></returns>
-    bool IsValidEmail(string email1)
+    public void registerA()
     {
-        string pattern = @"^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$";
-        return Regex.IsMatch(email1, pattern);
+        StartCoroutine(RegisterB(email.text, password.text, username.text));
     }
+
+    private IEnumerator RegisterB(string email, string password, string username)
+    {
+        var registertask = auth.CreateUserWithEmailAndPasswordAsync(email, password);
+        yield return new WaitUntil(() => registertask.IsCompleted);
+    }
+
+
+
 }
