@@ -80,7 +80,32 @@ public class Database : MonoBehaviour
         var registertask = auth.CreateUserWithEmailAndPasswordAsync(email, password);
         yield return new WaitUntil(() => registertask.IsCompleted);
     }
+    public void logincoroutine() // to login account
+    {
+        auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
 
 
+        auth.SignInWithEmailAndPasswordAsync(email.text, password.text).ContinueWithOnMainThread(task => {
+            if (task.IsCanceled)
+            {
+                Debug.LogError("Login was canceled."); //prompt to user on the console that the login got cancelled
 
+                return;
+            }
+            if (task.IsFaulted)
+            {
+                Debug.LogError("Login encountered an error: " + task.Exception); // prompt the user that the login have an error 
+                return;
+            }
+            //Firebase.Auth.FirebaseUser user = task.Result;
+            auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
+
+            Firebase.Auth.AuthResult result = task.Result; // check if result if successful 
+            Debug.LogFormat("User signed in successfully: {0} ({1})", //prompt if can user is able to login in the console
+                result.User.DisplayName, result.User.UserId); // show the display name for user and the user ID
+
+        });
+
+
+    }
 }
