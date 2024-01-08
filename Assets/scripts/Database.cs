@@ -20,9 +20,11 @@ public class Database : MonoBehaviour
     [SerializeField] private TMP_InputField email; // input field for email
     [SerializeField] private TMP_InputField password; // input field for password 
     [SerializeField] private TMP_InputField username; // input field for username 
-/*    public GameObject username;
-    public GameObject email;
-    public GameObject password;*/
+    /*    public GameObject username;
+        public GameObject email;
+        public GameObject password;*/
+
+    public GameObject logincanvas;
 
     private async void Awake()
     {
@@ -103,7 +105,8 @@ public class Database : MonoBehaviour
             Firebase.Auth.AuthResult result = task.Result; // check if result if successful 
             Debug.LogFormat("User signed in successfully: {0} ({1})", //prompt if can user is able to login in the console
                 result.User.DisplayName, result.User.UserId); // show the display name for user and the user ID
-
+            logincanvas.SetActive(false);
+                
         });
 
 
