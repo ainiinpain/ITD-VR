@@ -8,9 +8,12 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/waterfall.unity
     guid: 99c9720ab356a0642a771bea13969a05
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/flowerdome.unity
     guid: fafe2e1c71df79342a56c5409bf5b3c2
+  - enabled: 1
+    path: Assets/Scenes/supertree.unity
+    guid: 699c848679aa9ba488de9beba39d7809
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: af4e681037229384db42e70163b20cac,
       type: 2}

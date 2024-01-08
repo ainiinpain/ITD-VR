@@ -14,8 +14,8 @@ Library: C:\Users\hanna\OneDrive - Ngee Ann Polytechnic\NP 2.2\UnityProj\ITD-VR\
 --assembly-defines=Firebase.Auth;
 --assembly-defines=Firebase.Database;
 --assembly-defines=Firebase.Platform;
+--assembly-defines=Firebase.TaskExtension;
 --assembly-defines=Google.MiniJson;
---assembly-defines=Meta.XR.Audio;
 --assembly-defines=Mono.Security;
 --assembly-defines=mscorlib;
 --assembly-defines=Oculus.Interaction;
@@ -59,8 +59,8 @@ Library: C:\Users\hanna\OneDrive - Ngee Ann Polytechnic\NP 2.2\UnityProj\ITD-VR\
 --assembly-defines=Firebase.Auth;
 --assembly-defines=Firebase.Database;
 --assembly-defines=Firebase.Platform;
+--assembly-defines=Firebase.TaskExtension;
 --assembly-defines=Google.MiniJson;
---assembly-defines=Meta.XR.Audio;
 --assembly-defines=Mono.Security;
 --assembly-defines=mscorlib;
 --assembly-defines=Oculus.Interaction;
